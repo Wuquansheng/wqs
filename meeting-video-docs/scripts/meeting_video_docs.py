@@ -221,7 +221,7 @@ def main():
     parser.add_argument("--out-dir", type=Path, required=True)
     parser.add_argument("--model", default="small")
     parser.add_argument("--language", default="zh")
-    parser.add_argument("--qa-start", help="Q&A start time, e.g. 00:31:04. Omit if unknown.")
+    parser.add_argument("--qa-start", help="Actual Q&A start time, e.g. HH:MM:SS. Omit if unknown.")
     parser.add_argument("--summary-md", type=Path, help="Markdown summary prepared by Codex.")
     parser.add_argument("--title", default="会议纪要")
     args = parser.parse_args()

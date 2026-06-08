@@ -75,7 +75,6 @@ $env:HTTPS_PROXY='http://127.0.0.1:7890'
   --out-dir meeting_01_outputs `
   --model small `
   --language zh `
-  --qa-start 00:31:04 `
   --title "meeting_01 会议"
 ```
 
@@ -85,6 +84,18 @@ $env:HTTPS_PROXY='http://127.0.0.1:7890'
 - `meeting_01_transcript_简体.md`
 - `meeting_01_transcript_简体.txt`
 - `meeting_01_完整版_简体.docx`
+
+如果已经确认问答开始时间，可以额外传入 `--qa-start`：
+
+```powershell
+.\.venv\Scripts\python.exe skills\meeting-video-docs\scripts\meeting_video_docs.py `
+  --segments meeting_01_outputs\meeting_01_segments.json `
+  --out-dir meeting_01_outputs `
+  --qa-start <实际问答开始时间> `
+  --title "meeting_01 会议"
+```
+
+`--qa-start` 没有固定默认值，需要根据每场会议的转场语判断，例如“大家有什么问题”“我先讲到这里”“接下来交流”等。
 
 ## 生成总结版 Word
 
@@ -107,7 +118,7 @@ meeting_01_outputs/meeting_01_summary_for_docx.md
 .\.venv\Scripts\python.exe skills\meeting-video-docs\scripts\meeting_video_docs.py `
   --segments meeting_01_outputs\meeting_01_segments.json `
   --out-dir meeting_01_outputs `
-  --qa-start 00:31:04 `
+  --qa-start <实际问答开始时间> `
   --summary-md meeting_01_outputs\meeting_01_summary_for_docx.md `
   --title "meeting_01 会议"
 ```
@@ -125,7 +136,7 @@ meeting_01_outputs/meeting_01_summary_for_docx.md
 | `--out-dir` | 输出目录 |
 | `--model` | Whisper 模型，默认 `small` |
 | `--language` | 识别语言，中文建议 `zh` |
-| `--qa-start` | 问答开始时间，例如 `00:31:04` |
+| `--qa-start` | 实际问答开始时间，例如 `HH:MM:SS`；不确定时不要传 |
 | `--summary-md` | Codex 已整理好的总结 Markdown |
 | `--title` | Word 文档标题 |
 
@@ -134,4 +145,4 @@ meeting_01_outputs/meeting_01_summary_for_docx.md
 - 完整版保留机器转写的口语表达和时间戳。
 - 总结版需要 Codex 基于完整内容归纳，脚本只负责把 Markdown 转为 Word。
 - 个别人名、软件名、专业术语可能存在转写误差，应以原视频为最终依据。
-- 如果会议没有明确问答部分，可以不传 `--qa-start`，脚本会生成连续完整稿。
+- 如果会议没有明确问答部分，或者还没判断出问答开始时间，可以不传 `--qa-start`，脚本会生成连续完整稿。

@@ -30,7 +30,7 @@ Use `scripts/meeting_video_docs.py` for deterministic transcription post-process
      - User proxy if available, commonly `HTTP_PROXY=http://127.0.0.1:7890` and `HTTPS_PROXY=http://127.0.0.1:7890`.
 
 3. **Transcribe and create the complete Word file**
-   - Run the bundled script. Example:
+   - First run the bundled script without `--qa-start` unless the user already provided a split time. Example:
 
 ```powershell
 .\.venv\Scripts\python.exe skills\meeting-video-docs\scripts\meeting_video_docs.py `
@@ -38,7 +38,6 @@ Use `scripts/meeting_video_docs.py` for deterministic transcription post-process
   --out-dir meeting_01_outputs `
   --model small `
   --language zh `
-  --qa-start 00:31:04 `
   --title "meeting_01 会议"
 ```
 
@@ -52,14 +51,15 @@ Use `scripts/meeting_video_docs.py` for deterministic transcription post-process
 
 4. **Identify the Q&A start time**
    - If the user provides a split point, use it.
-   - Otherwise inspect the transcript around likely transition phrases:
+   - Otherwise inspect the transcript after transcription and choose a meeting-specific split point around likely transition phrases:
      - “大家有什么问题”
      - “有什么问题吗”
      - “我先讲到这里”
      - “接下来大家交流”
      - “问答”
-   - Pass the split time with `--qa-start HH:MM:SS`.
+   - Pass the split time with `--qa-start HH:MM:SS` only after identifying the actual transition.
    - If no Q&A exists, omit `--qa-start` and produce one continuous complete transcript.
+   - Do not treat any example timestamp as a default; each meeting needs its own split judgment.
 
 5. **Create the summary Markdown**
    - Read the full simplified transcript and produce a concise but complete Markdown summary.
@@ -88,7 +88,7 @@ Use `scripts/meeting_video_docs.py` for deterministic transcription post-process
 .\.venv\Scripts\python.exe skills\meeting-video-docs\scripts\meeting_video_docs.py `
   --segments meeting_01_outputs\meeting_01_segments.json `
   --out-dir meeting_01_outputs `
-  --qa-start 00:31:04 `
+  --qa-start <actual-q-and-a-start-time> `
   --summary-md meeting_01_outputs\meeting_01_summary_for_docx.md `
   --title "meeting_01 会议"
 ```
@@ -124,5 +124,5 @@ Run with Hugging Face mirror and local cache:
 ```powershell
 $env:HF_ENDPOINT='https://hf-mirror.com'
 $env:HF_HOME='<workspace>\.hf_cache'
-.\.venv\Scripts\python.exe skills\meeting-video-docs\scripts\meeting_video_docs.py --video meeting_01.mp4 --out-dir meeting_01_outputs --qa-start 00:31:04
+.\.venv\Scripts\python.exe skills\meeting-video-docs\scripts\meeting_video_docs.py --video meeting_01.mp4 --out-dir meeting_01_outputs
 ```
