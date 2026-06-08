@@ -1,0 +1,3 @@
+display_name: Meeting Video Docs
+short_description: Convert recordings to Word meeting docs.
+default_prompt: Convert a meeting video into simplified-Chinese Word documents with a complete transcript and structured summary.
