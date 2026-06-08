@@ -16,6 +16,32 @@ meeting-video-docs/
     └── meeting_video_docs.py
 ```
 
+## 下载 / 安装 Skill
+
+在 Codex 工作区中执行：
+
+```powershell
+npx.cmd skills add https://github.com/Wuquansheng/wqs --skill meeting-video-docs
+```
+
+如果 PowerShell 可以正常执行 `npx`，也可以使用：
+
+```powershell
+npx skills add https://github.com/Wuquansheng/wqs --skill meeting-video-docs
+```
+
+安装完成后重启 Codex，让新 skill 被自动识别。
+
+如果 GitHub 连接失败，可先确认代理端口是否可用，再设置代理后重试：
+
+```powershell
+Test-NetConnection 127.0.0.1 -Port 7890
+
+$env:HTTP_PROXY='http://127.0.0.1:7890'
+$env:HTTPS_PROXY='http://127.0.0.1:7890'
+npx.cmd skills add https://github.com/Wuquansheng/wqs --skill meeting-video-docs
+```
+
 ## 依赖
 
 建议在项目虚拟环境中安装：

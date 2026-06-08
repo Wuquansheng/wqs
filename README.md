@@ -13,6 +13,16 @@
 
 目录：[meeting-video-docs](meeting-video-docs/)
 
+## 下载 / 安装 Skill
+
+在 Codex 工作区中执行：
+
+```powershell
+npx.cmd skills add https://github.com/Wuquansheng/wqs --skill meeting-video-docs
+```
+
+安装后重启 Codex，让新 skill 生效。
+
 ## 目录规划
 
 ```text
